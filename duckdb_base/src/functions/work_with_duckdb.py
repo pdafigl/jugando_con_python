@@ -18,7 +18,7 @@ def create_duckdb_connection(file_path:str):
     return conn
 
 
-def create_duckdb_table(create_sentence:str, conn):
+def create_duckdb_table(sentence:str, conn):
     """Function to create e new duckdb table.
 
     Args:
@@ -26,11 +26,12 @@ def create_duckdb_table(create_sentence:str, conn):
         conn (duckdb connection): the ducdb connection 
     """
     try:
-        conn.sql(create_sentence)
+        conn.sql(sentence)
     except Exception as e:
         print(e)
         raise
-
+create_duckdb_schema = create_duckdb_table
+insert_duckbd_table  = create_duckdb_table
 
 def select_duckbd_table(sentence:str, conn):
     """Function to exec SELECT query
@@ -46,20 +47,6 @@ def select_duckbd_table(sentence:str, conn):
         print(e)
         raise
     return sql_result
-
-def insert_duckbd_table(sentence:str, conn):
-    """Function to exec SELECT query
-
-    Args:
-        sentence (str): SQL sentence.
-        conn (duckdb connection): the ducdb connection 
-    """
-    try:
-       conn.sql(sentence)
-    except Exception as e:
-        print(e)
-        raise
-
 
 def drop_duckdb_table(table_name:str, conn):
     """Function to drop e  duckdb table.
@@ -83,8 +70,9 @@ def load_csv_file_in_duckdb(dataframe, table_name:str, conn:any):
         conn (duckdb connection): the ducdb connection 
     """
     try:
+        df = dataframe
         # Create table and insert Data
-        conn.sql(f"CREATE TABLE {table_name} AS SELECT * FROM dataframe")
+        conn.sql(f"CREATE TABLE {table_name} AS SELECT * FROM df")
     except Exception as e:
         print(e)
         raise
